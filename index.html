@@ -643,7 +643,7 @@
     </div>
     <div class="print-kop-right">
       <div style="font-size:28pt;font-family:'Fraunces',serif;color:#2c5f2e;font-weight:700;line-height:1;">PTS</div>
-      <div style="margin-top:4px;"><strong>SURAT PENAWARAN HARGA</strong></div>
+      <div style="margin-top:4px;"><strong>SURAT PENAWARAN BARANG / JASA</strong></div>
     </div>
   </div>
 
@@ -691,20 +691,20 @@
         <span class="error-msg">Wajib diisi</span>
       </div>
       <div class="field">
-        <label>Nama PIC / Up.</label>
+        <label>Nama PIC / Customer</label>
         <input type="text" id="nama_pic" placeholder="cth: Nama Customer">
       </div>
       <div class="field">
-        <label>Jabatan PIC</label>
+        <label>Jabatan </label>
         <input type="text" id="jabatan_pic" placeholder="cth: Procurement Manager">
       </div>
       <div class="field">
-        <label>No. Telepon PIC</label>
+        <label>No. Telepon </label>
         <input type="tel" id="telp_pic" placeholder="cth: 081234567890">
         <span class="hint">Format: phone, nomor lokal atau internasional</span>
       </div>
       <div class="field">
-        <label>Email PIC</label>
+        <label>Email </label>
         <input type="email" id="email_pic" placeholder="cth: procurement@perusahaan.com">
       </div>
     </div>
@@ -877,7 +877,7 @@
 <div id="preview-overlay">
   <div class="preview-box">
     <div class="preview-header">
-      <h2>Preview Penawaran</h2>
+      <h2>Preview Penawaran Jasa / Barang</h2>
       <button class="btn-close" onclick="closePreview()">×</button>
     </div>
     <div class="preview-body" id="preview-content"></div>
@@ -898,7 +898,7 @@ let validitySelected = '14 hari';
 document.getElementById('tgl_penawaran').value = new Date().toISOString().split('T')[0];
 
 // Default item
-addItem('Jasa Cleaning : HE Oilcoller, Intercoller, Aftercoller, Chemical Neutralizing, Test Kebocoran', 'HE COMP FS ELLIOT P 300', 1, 17000000);
+addItem('Jasa item / barang', 'Nama Unit', 1, 1700000);
 
 // ── Tambah item ──
 function addItem(desc='', unit='', qty=1, harga=0) {
