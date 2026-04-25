@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Form Request — CV. Permata Teknik Solution</title>
+<title>Form Penawaran Jasa Cleaning — CV. Permata Teknik Solution</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -501,9 +501,123 @@
   }
 
   @media print {
-    body { padding: 0; background: white; }
-    .action-bar, .btn-remove, .btn-add-item { display: none; }
-    .card { box-shadow: none; border: 1px solid #ddd; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+    html, body {
+      margin: 0; padding: 0;
+      background: white !important;
+      width: 100%; height: auto;
+      overflow: visible !important;
+    }
+
+    /* Sembunyikan elemen UI yang tidak perlu */
+    .page-header, .action-bar, .btn-remove, .btn-add-item,
+    .ppn-control label:last-child, #preview-overlay { display: none !important; }
+
+    .container {
+      max-width: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* Kop surat cetak */
+    .print-kop {
+      display: flex !important;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 0 0 14px;
+      margin-bottom: 14px;
+      border-bottom: 2.5px solid #2c5f2e;
+    }
+    .print-kop-left h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 18pt;
+      color: #2c5f2e;
+      font-weight: 700;
+    }
+    .print-kop-left p { font-size: 8.5pt; color: #555; margin-top: 2px; }
+    .print-kop-right { text-align: right; font-size: 8pt; color: #555; }
+    .print-kop-right strong { font-size: 10pt; color: #1a1a18; }
+
+    /* Nomor penawaran banner */
+    .print-noref {
+      display: flex !important;
+      justify-content: space-between;
+      background: #f4f8f4;
+      border: 1px solid #c5d9c5;
+      border-radius: 6px;
+      padding: 8px 14px;
+      margin-bottom: 14px;
+      font-size: 9pt;
+    }
+    .print-noref span { color: #555; }
+    .print-noref strong { color: #2c5f2e; }
+
+    .card {
+      box-shadow: none !important;
+      border: 1px solid #ddd !important;
+      border-radius: 6px !important;
+      padding: 12px 16px !important;
+      margin-bottom: 10px !important;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .card-title {
+      font-size: 9pt !important;
+      padding-bottom: 8px !important;
+      margin-bottom: 12px !important;
+    }
+    .card-title .icon { display: none; }
+
+    /* Tampilkan data sebagai teks, sembunyikan input */
+    .field input, .field select, .field textarea {
+      border: none !important;
+      background: transparent !important;
+      padding: 0 !important;
+      font-size: 9.5pt !important;
+      font-weight: 600;
+      box-shadow: none !important;
+      color: #1a1a18 !important;
+      height: auto !important;
+      resize: none;
+    }
+    .field label {
+      font-size: 7.5pt !important;
+      color: #888 !important;
+    }
+    .field .hint, .field .error-msg { display: none !important; }
+    .badge-row { display: none !important; }
+    .ppn-control input[type="number"] {
+      border: none; background: transparent; font-weight: 600; width: 40px;
+    }
+
+    /* Item table */
+    .item-header span { font-size: 7.5pt !important; }
+    .item-row input {
+      border: none !important;
+      background: transparent !important;
+      padding: 0 !important;
+      font-size: 9pt !important;
+      box-shadow: none !important;
+    }
+    .item-row { margin-bottom: 4px !important; }
+
+    /* Totals */
+    .totals { break-inside: avoid; page-break-inside: avoid; }
+    .total-row { padding: 8px 14px !important; }
+    .total-row.grand { background: #2c5f2e !important; color: white !important; }
+
+    /* Form grid spacing */
+    .form-grid { gap: 10px !important; }
+
+    /* Auto page break */
+    .card:nth-child(4) { page-break-after: auto; }
+
+    @page {
+      size: A4 portrait;
+      margin: 14mm 14mm 16mm 14mm;
+    }
   }
 </style>
 </head>
@@ -512,13 +626,32 @@
 <div class="page-header">
   <div class="header-logo">PTS</div>
   <div class="header-text">
-    <h1 style="font-size: 30px;">CV. Permata Teknik Solution</h1>
-   <p style="font-size: 15px;">GENERAL SUPPLIER AND ENGINEERING SERVICE</p>
-    <p>Permata Nusa Indah Cluster Emerald No.01, RT005/RW013, Cibitung, Muktiwari, Kab. Bekasi </p>
+    <h1>CV. Permata Teknik Solution</h1>
+    <p>Form Input Data Penawaran Jasa Cleaning</p>
   </div>
 </div>
 
 <div class="container">
+
+  <!-- KOP SURAT — hanya tampil saat cetak -->
+  <div class="print-kop" style="display:none;">
+    <div class="print-kop-left">
+      <h2>CV. Permata Teknik Solution</h2>
+      <p>General Supplier and Engineering Service</p>
+      <p>Permata Nusa Indah Cluster Emerald No.01, RT005/RW013, Cibitung, Muktiwari, Kab. Bekasi</p>
+      <p>Email: Permatatekniksolution@gmail.com</p>
+    </div>
+    <div class="print-kop-right">
+      <div style="font-size:28pt;font-family:'Fraunces',serif;color:#2c5f2e;font-weight:700;line-height:1;">PTS</div>
+      <div style="margin-top:4px;"><strong>SURAT PENAWARAN HARGA</strong></div>
+    </div>
+  </div>
+
+  <!-- NO. REFERENSI — hanya tampil saat cetak -->
+  <div class="print-noref" style="display:none;">
+    <div><span>No. Penawaran: </span><strong id="print-no">—</strong></div>
+    <div><span>Tanggal: </span><strong id="print-tgl">—</strong></div>
+  </div>
 
   <!-- ═══ 1. NOMOR PENAWARAN ═══ -->
   <div class="card">
@@ -549,17 +682,18 @@
     <div class="form-grid">
       <div class="field span-2">
         <label>Nama Perusahaan <span class="req">*</span></label>
-        <input type="text" id="nama_perusahaan" placeholder="cth: PT. Nama Perusahaan">
+        <input type="text" id="nama_perusahaan" placeholder="cth: PT. Sejahtera Makmur Rekadaya" value="PT. Sejahtera Makmur Rekadaya">
         <span class="error-msg">Wajib diisi</span>
       </div>
       <div class="field span-2">
         <label>Alamat Lengkap <span class="req">*</span></label>
-        <textarea id="alamat" placeholder="Gedung, lantai, jalan, kelurahan, kecamatan, kota"></textarea>
+        <textarea id="alamat" placeholder="Gedung, lantai, jalan, kelurahan, kecamatan, kota">Gedung Office EightyEight@Kasablanka, Lantai 9, Unit A.
+Jl. Casablanka Kav.88, Kel.Menteng Dalam Kec.Tebet, Jakarta Selatan</textarea>
         <span class="error-msg">Wajib diisi</span>
       </div>
       <div class="field">
         <label>Nama PIC / Up.</label>
-        <input type="text" id="nama_pic" placeholder="cth: Nama Klien">
+        <input type="text" id="nama_pic" placeholder="cth: Bapak Fentri" value="Bapak Fentri">
       </div>
       <div class="field">
         <label>Jabatan PIC</label>
@@ -586,7 +720,7 @@
     <div class="form-grid cols-3">
       <div class="field span-2">
         <label>Nama Unit / Mesin <span class="req">*</span></label>
-        <input type="text" id="nama_unit" placeholder="cth: Nama Barang / Jasa">
+        <input type="text" id="nama_unit" placeholder="cth: HE COMP FS ELLIOT P 300" value="HE COMP FS ELLIOT P 300">
         <span class="error-msg">Wajib diisi</span>
       </div>
       <div class="field">
@@ -1009,6 +1143,25 @@ function showToast(msg, bg='#2c5f2e') {
 // Close overlay on backdrop click
 document.getElementById('preview-overlay').addEventListener('click', function(e) {
   if (e.target === this) closePreview();
+});
+
+// Sebelum print: isi elemen kop surat dengan data terkini
+window.addEventListener('beforeprint', function() {
+  const no = document.getElementById('no_penawaran')?.value || '—';
+  const tgl = document.getElementById('tgl_penawaran')?.value || '';
+  document.getElementById('print-no').textContent = no;
+  document.getElementById('print-tgl').textContent = tgl
+    ? new Date(tgl).toLocaleDateString('id-ID', {day:'numeric',month:'long',year:'numeric'})
+    : '—';
+
+  // Sembunyikan card "Informasi Penawaran" saat cetak karena sudah ada di kop
+  const infoCard = document.querySelector('.card:nth-child(3)');
+  if (infoCard) infoCard.style.display = 'none';
+});
+
+window.addEventListener('afterprint', function() {
+  const infoCard = document.querySelector('.card:nth-child(3)');
+  if (infoCard) infoCard.style.display = '';
 });
 </script>
 </body>
