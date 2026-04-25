@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Penawaran Jasa Cleaning — CV. Permata Teknik Solution</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f1eb;
+    --surface: #ffffff;
+    --surface2: #faf8f4;
+    --border: #e0d9ce;
+    --border-focus: #2c5f2e;
+    --accent: #2c5f2e;
+    --accent-light: #e8f0e8;
+    --accent2: #c8860a;
+    --text: #1a1a18;
+    --text-muted: #6b6860;
+    --text-label: #3d3d3a;
+    --error: #c0392b;
+    --success: #2c5f2e;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+
+  /* ── Header ── */
+  .page-header {
+    background: var(--accent);
+    color: white;
+    padding: 28px 40px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    right: 60px; bottom: -60px;
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .header-logo {
+    width: 52px; height: 52px;
+    background: white;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .header-text h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .header-text p {
+    font-size: 13px;
+    opacity: 0.78;
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  /* ── Layout ── */
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 36px 20px 0;
+  }
+
+  /* ── Section card ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .card-title {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-title .icon {
+    width: 30px; height: 30px;
+    background: var(--accent-light);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+  }
+
+  /* ── Form grid ── */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-grid.cols-1 { grid-template-columns: 1fr; }
+  .form-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .span-2 { grid-column: span 2; }
+  .span-3 { grid-column: span 3; }
+
+  /* ── Field ── */
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-label);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .field label .req { color: var(--error); margin-left: 2px; }
+
+  .field input,
+  .field select,
+  .field textarea {
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 11px 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+    outline: none;
+    width: 100%;
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--border-focus);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(44,95,46,0.1);
+  }
+  .field input::placeholder,
+  .field textarea::placeholder { color: #b0ada6; font-weight: 400; }
+  .field textarea { resize: vertical; min-height: 80px; }
+  .field select { cursor: pointer; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6860' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+  .field .hint {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin-top: -2px;
+  }
+  .field .error-msg {
+    font-size: 11.5px;
+    color: var(--error);
+    display: none;
+  }
+  .field.has-error input,
+  .field.has-error select,
+  .field.has-error textarea {
+    border-color: var(--error);
+    background: #fff8f7;
+  }
+  .field.has-error .error-msg { display: block; }
+
+  /* ── Item rows (tabel penawaran) ── */
+  .item-table { width: 100%; }
+  .item-header {
+    display: grid;
+    grid-template-columns: 30px 1fr 140px 120px 130px 36px;
+    gap: 8px;
+    align-items: center;
+    padding: 0 4px 8px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 10px;
+  }
+  .item-header span {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .item-row {
+    display: grid;
+    grid-template-columns: 30px 1fr 140px 120px 130px 36px;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+    animation: slideIn 0.2s ease;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .item-no {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-align: center;
+    width: 30px;
+  }
+  .item-row input {
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    width: 100%;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .item-row input:focus {
+    border-color: var(--border-focus);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(44,95,46,0.1);
+  }
+  .item-row input.price { text-align: right; }
+  .item-row input[readonly] {
+    background: var(--accent-light);
+    color: var(--accent);
+    font-weight: 600;
+    cursor: default;
+  }
+  .btn-remove {
+    width: 32px; height: 32px;
+    background: #fff0ef;
+    border: 1.5px solid #fcd4d0;
+    border-radius: 8px;
+    color: var(--error);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s, border-color 0.15s;
+    flex-shrink: 0;
+  }
+  .btn-remove:hover { background: #ffe0dd; border-color: var(--error); }
+
+  .btn-add-item {
+    margin-top: 12px;
+    background: none;
+    border: 1.5px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 10px 18px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+    width: 100%;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .btn-add-item:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  /* ── Total box ── */
+  .totals {
+    margin-top: 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px 16px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .total-row:last-child { border-bottom: none; }
+  .total-row.subtotal { background: var(--surface2); }
+  .total-row.ppn { background: var(--surface2); color: var(--text-muted); font-size: 13px; }
+  .total-row.grand {
+    background: var(--accent);
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .total-label { font-weight: 500; }
+  .total-value { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  /* ── PPN selector ── */
+  .ppn-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .ppn-control label { font-size: 13px; color: var(--text-muted); }
+  .ppn-control input[type="number"] {
+    width: 70px;
+    padding: 7px 10px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+    background: var(--surface2);
+    outline: none;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  .ppn-control input[type="number"]:focus {
+    border-color: var(--border-focus);
+    background: white;
+  }
+
+  /* ── Validity badge ── */
+  .badge-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 2px;
+  }
+  .badge-opt {
+    padding: 7px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    background: var(--surface2);
+    color: var(--text-muted);
+    transition: all 0.15s;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 500;
+  }
+  .badge-opt.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  /* ── Action bar ── */
+  .action-bar {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 13px 28px;
+    border-radius: var(--radius);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.18s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .btn-secondary {
+    background: white;
+    border: 1.5px solid var(--border);
+    color: var(--text-muted);
+  }
+  .btn-secondary:hover { border-color: var(--text-muted); color: var(--text); }
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    box-shadow: 0 4px 12px rgba(44,95,46,0.25);
+  }
+  .btn-primary:hover { background: #245026; box-shadow: 0 6px 16px rgba(44,95,46,0.35); transform: translateY(-1px); }
+  .btn-print {
+    background: var(--accent2);
+    color: white;
+    box-shadow: 0 4px 12px rgba(200,134,10,0.22);
+  }
+  .btn-print:hover { background: #a86e08; transform: translateY(-1px); }
+
+  /* ── Toast ── */
+  #toast {
+    position: fixed;
+    bottom: 30px; right: 30px;
+    background: var(--accent);
+    color: white;
+    padding: 13px 22px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.25s;
+    pointer-events: none;
+    z-index: 999;
+    display: flex; align-items: center; gap: 8px;
+  }
+  #toast.show { opacity: 1; transform: translateY(0); }
+
+  /* ── Preview modal ── */
+  #preview-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  #preview-overlay.open { display: flex; }
+  .preview-box {
+    background: white;
+    border-radius: 16px;
+    max-width: 680px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+  }
+  .preview-header {
+    padding: 20px 28px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .preview-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    color: var(--accent);
+  }
+  .btn-close {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--text-muted);
+    line-height: 1;
+  }
+  .preview-body { padding: 24px 28px; font-size: 14px; line-height: 1.8; }
+  .preview-body table { width: 100%; border-collapse: collapse; margin: 14px 0; }
+  .preview-body th {
+    background: var(--accent);
+    color: white;
+    padding: 9px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: left;
+    letter-spacing: 0.3px;
+  }
+  .preview-body td { padding: 9px 12px; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .preview-body tr:last-child td { border-bottom: none; }
+  .preview-body .grand-row td { font-weight: 700; background: var(--accent-light); color: var(--accent); }
+  .preview-kv { display: flex; gap: 12px; margin-bottom: 6px; }
+  .preview-kv .k { min-width: 160px; color: var(--text-muted); font-size: 13px; }
+  .preview-kv .v { font-weight: 600; font-size: 13px; }
+  .preview-section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 13px;
+    color: var(--accent);
+    margin: 16px 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  @media (max-width: 640px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .form-grid.cols-3 { grid-template-columns: 1fr 1fr; }
+    .span-2, .span-3 { grid-column: span 1; }
+    .card { padding: 20px 18px; }
+    .page-header { padding: 20px; }
+    .item-header, .item-row {
+      grid-template-columns: 24px 1fr 100px 80px 100px 32px;
+      gap: 5px;
+    }
+    .action-bar { justify-content: stretch; }
+    .btn { flex: 1; justify-content: center; }
+  }
+
+  @media print {
+    body { padding: 0; background: white; }
+    .action-bar, .btn-remove, .btn-add-item { display: none; }
+    .card { box-shadow: none; border: 1px solid #ddd; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-logo">PTS</div>
+  <div class="header-text">
+    <h1>CV. Permata Teknik Solution</h1>
+    <p>Form Input Data Penawaran Jasa Cleaning</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ═══ 1. NOMOR PENAWARAN ═══ -->
+  <div class="card">
+    <div class="card-title">
+      <div class="icon">📋</div>
+      Informasi Penawaran
+    </div>
+    <div class="form-grid">
+      <div class="field">
+        <label>No. Penawaran <span class="req">*</span></label>
+        <input type="text" id="no_penawaran" placeholder="cth: PTS/113/04/2026" value="PTS/113/04/2026">
+        <span class="error-msg">Wajib diisi</span>
+      </div>
+      <div class="field">
+        <label>Tanggal Penawaran <span class="req">*</span></label>
+        <input type="date" id="tgl_penawaran">
+        <span class="error-msg">Wajib diisi</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 2. DATA PELANGGAN ═══ -->
+  <div class="card">
+    <div class="card-title">
+      <div class="icon">🏢</div>
+      Data Pelanggan (Tujuan Penawaran)
+    </div>
+    <div class="form-grid">
+      <div class="field span-2">
+        <label>Nama Perusahaan <span class="req">*</span></label>
+        <input type="text" id="nama_perusahaan" placeholder="cth: PT. Sejahtera Makmur Rekadaya" value="PT. Sejahtera Makmur Rekadaya">
+        <span class="error-msg">Wajib diisi</span>
+      </div>
+      <div class="field span-2">
+        <label>Alamat Lengkap <span class="req">*</span></label>
+        <textarea id="alamat" placeholder="Gedung, lantai, jalan, kelurahan, kecamatan, kota">Gedung Office EightyEight@Kasablanka, Lantai 9, Unit A.
+Jl. Casablanka Kav.88, Kel.Menteng Dalam Kec.Tebet, Jakarta Selatan</textarea>
+        <span class="error-msg">Wajib diisi</span>
+      </div>
+      <div class="field">
+        <label>Nama PIC / Up.</label>
+        <input type="text" id="nama_pic" placeholder="cth: Bapak Fentri" value="Bapak Fentri">
+      </div>
+      <div class="field">
+        <label>Jabatan PIC</label>
+        <input type="text" id="jabatan_pic" placeholder="cth: Procurement Manager">
+      </div>
+      <div class="field">
+        <label>No. Telepon PIC</label>
+        <input type="tel" id="telp_pic" placeholder="cth: 021-5557890">
+        <span class="hint">Format: nomor lokal atau internasional</span>
+      </div>
+      <div class="field">
+        <label>Email PIC</label>
+        <input type="email" id="email_pic" placeholder="cth: procurement@perusahaan.com">
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 3. DATA UNIT ═══ -->
+  <div class="card">
+    <div class="card-title">
+      <div class="icon">⚙️</div>
+      Data Unit yang Dikerjakan
+    </div>
+    <div class="form-grid cols-3">
+      <div class="field span-2">
+        <label>Nama Unit / Mesin <span class="req">*</span></label>
+        <input type="text" id="nama_unit" placeholder="cth: HE COMP FS ELLIOT P 300" value="HE COMP FS ELLIOT P 300">
+        <span class="error-msg">Wajib diisi</span>
+      </div>
+      <div class="field">
+        <label>Jumlah Unit</label>
+        <input type="number" id="qty_unit" placeholder="1" value="1" min="1">
+      </div>
+      <div class="field">
+        <label>Nomor Seri</label>
+        <input type="text" id="no_seri" placeholder="cth: SN-20240001">
+      </div>
+      <div class="field">
+        <label>Tahun Pembuatan</label>
+        <input type="number" id="tahun_unit" placeholder="cth: 2019" min="1990" max="2099">
+      </div>
+      <div class="field">
+        <label>Lokasi Unit</label>
+        <input type="text" id="lokasi_unit" placeholder="cth: Plant Area A">
+      </div>
+      <div class="field span-3">
+        <label>Keterangan Tambahan Unit</label>
+        <textarea id="ket_unit" rows="2" placeholder="cth: kondisi, catatan khusus, dsb."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 4. DETAIL PEKERJAAN ═══ -->
+  <div class="card">
+    <div class="card-title">
+      <div class="icon">🔧</div>
+      Detail Item Pekerjaan & Harga
+    </div>
+
+    <div class="item-table">
+      <div class="item-header">
+        <span>#</span>
+        <span>Nama Pekerjaan / Deskripsi</span>
+        <span>Nama Unit</span>
+        <span>Qty</span>
+        <span>Harga (Rp)</span>
+        <span></span>
+      </div>
+      <div id="item-rows"></div>
+    </div>
+
+    <button class="btn-add-item" onclick="addItem()">
+      <span>＋</span> Tambah Item Pekerjaan
+    </button>
+
+    <!-- Totals -->
+    <div class="field" style="margin-top:16px; flex-direction:row; align-items:center; gap:10px;">
+      <label style="text-transform:none; letter-spacing:0; font-size:13px; white-space:nowrap; font-weight:500;">PPN (%)</label>
+      <div class="ppn-control">
+        <input type="number" id="ppn_pct" value="11" min="0" max="100" oninput="recalc()">
+        <label>% — otomatis dihitung dari subtotal</label>
+      </div>
+    </div>
+
+    <div class="totals" style="margin-top:14px;">
+      <div class="total-row subtotal">
+        <span class="total-label">Subtotal</span>
+        <span class="total-value" id="t-subtotal">Rp 0</span>
+      </div>
+      <div class="total-row ppn">
+        <span class="total-label">PPN <span id="ppn-label">11</span>%</span>
+        <span class="total-value" id="t-ppn">Rp 0</span>
+      </div>
+      <div class="total-row grand">
+        <span class="total-label">GRAND TOTAL</span>
+        <span class="total-value" id="t-grand">Rp 0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 5. SYARAT & KETENTUAN ═══ -->
+  <div class="card">
+    <div class="card-title">
+      <div class="icon">📝</div>
+      Syarat & Ketentuan Penawaran
+    </div>
+    <div class="form-grid cols-3">
+      <div class="field">
+        <label>Mata Uang</label>
+        <select id="mata_uang">
+          <option value="IDR" selected>IDR — Rupiah</option>
+          <option value="USD">USD — Dollar</option>
+          <option value="SGD">SGD — Singapore Dollar</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Masa Berlaku Penawaran</label>
+        <div class="badge-row" id="validity-opts">
+          <button class="badge-opt" onclick="setValidity(this,'7 hari')">7 Hari</button>
+          <button class="badge-opt active" onclick="setValidity(this,'14 hari')">14 Hari</button>
+          <button class="badge-opt" onclick="setValidity(this,'30 hari')">30 Hari</button>
+        </div>
+        <input type="text" id="masa_berlaku" value="14 hari" style="margin-top:8px;" placeholder="atau ketik manual">
+      </div>
+      <div class="field">
+        <label>Estimasi Waktu Pengerjaan</label>
+        <input type="text" id="waktu_kerjaan" placeholder="cth: 3 Hari" value="3 Hari">
+      </div>
+      <div class="field span-2">
+        <label>Termin / Syarat Pembayaran</label>
+        <input type="text" id="termin" placeholder="cth: Termin atau Tempo sesuai kesepakatan" value="Termin atau Tempo sesuai dengan kesepakatan">
+      </div>
+      <div class="field">
+        <label>Catatan Harga</label>
+        <input type="text" id="catatan_harga" placeholder="cth: Termasuk PPN 11%" value="Termasuk PPN 11%">
+      </div>
+      <div class="field span-3">
+        <label>Catatan / Exclusi (nb)</label>
+        <textarea id="catatan_nb" placeholder="cth: Harga diluar pergantian PART" rows="2">Diluar pergantian PART.</textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 6. PENANDATANGAN ═══ -->
+  <div class="card">
+    <div class="card-title">
+      <div class="icon">✍️</div>
+      Data Penandatangan (Dari CV. PTS)
+    </div>
+    <div class="form-grid">
+      <div class="field">
+        <label>Nama <span class="req">*</span></label>
+        <input type="text" id="ttd_nama" placeholder="cth: DIMAS" value="DIMAS">
+        <span class="error-msg">Wajib diisi</span>
+      </div>
+      <div class="field">
+        <label>Jabatan</label>
+        <input type="text" id="ttd_jabatan" placeholder="cth: Sales Engineer" value="Sales Engineer">
+      </div>
+      <div class="field">
+        <label>No. Telepon <span class="req">*</span></label>
+        <input type="tel" id="ttd_telp" placeholder="cth: 085 880 912 714" value="085 880 912 714">
+        <span class="error-msg">Wajib diisi</span>
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="ttd_email" placeholder="cth: Permatatekniksolution@gmail.com" value="Permatatekniksolution@gmail.com">
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTION BAR -->
+  <div class="action-bar">
+    <button class="btn btn-secondary" onclick="resetForm()">🔄 Reset Form</button>
+    <button class="btn btn-print" onclick="previewData()">👁️ Preview & Cetak</button>
+    <button class="btn btn-primary" onclick="saveData()">💾 Simpan Data</button>
+  </div>
+
+</div>
+
+<!-- Preview Modal -->
+<div id="preview-overlay">
+  <div class="preview-box">
+    <div class="preview-header">
+      <h2>Preview Penawaran</h2>
+      <button class="btn-close" onclick="closePreview()">×</button>
+    </div>
+    <div class="preview-body" id="preview-content"></div>
+    <div style="padding: 16px 28px 24px; display:flex; gap:10px; justify-content:flex-end;">
+      <button class="btn btn-secondary" onclick="closePreview()">Tutup</button>
+      <button class="btn btn-print" onclick="window.print()">🖨️ Cetak</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast">✅ <span id="toast-msg"></span></div>
+
+<script>
+// ── Inisialisasi ──
+let items = [];
+let validitySelected = '14 hari';
+
+document.getElementById('tgl_penawaran').value = new Date().toISOString().split('T')[0];
+
+// Default item
+addItem('Jasa Cleaning : HE Oilcoller, Intercoller, Aftercoller, Chemical Neutralizing, Test Kebocoran', 'HE COMP FS ELLIOT P 300', 1, 17000000);
+
+// ── Tambah item ──
+function addItem(desc='', unit='', qty=1, harga=0) {
+  const id = Date.now();
+  items.push({ id, desc, unit, qty, harga });
+  renderItems();
+  recalc();
+}
+
+function renderItems() {
+  const container = document.getElementById('item-rows');
+  container.innerHTML = '';
+  items.forEach((item, idx) => {
+    const row = document.createElement('div');
+    row.className = 'item-row';
+    row.innerHTML = `
+      <div class="item-no">${idx+1}</div>
+      <input type="text" placeholder="Nama/deskripsi pekerjaan"
+        value="${escHtml(item.desc)}"
+        oninput="updateItem(${item.id},'desc',this.value)">
+      <input type="text" placeholder="Nama unit"
+        value="${escHtml(item.unit)}"
+        oninput="updateItem(${item.id},'unit',this.value)">
+      <input type="number" placeholder="Qty" min="1"
+        value="${item.qty}"
+        oninput="updateItem(${item.id},'qty',this.value)">
+      <input type="number" class="price" placeholder="0" min="0"
+        value="${item.harga}"
+        oninput="updateItem(${item.id},'harga',this.value)">
+      <button class="btn-remove" onclick="removeItem(${item.id})" title="Hapus">−</button>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function updateItem(id, field, value) {
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  item[field] = field === 'qty' || field === 'harga' ? parseFloat(value)||0 : value;
+  recalc();
+}
+
+function removeItem(id) {
+  if (items.length === 1) { showToast('⚠️ Minimal 1 item harus ada', '#c0392b'); return; }
+  items = items.filter(i => i.id !== id);
+  renderItems();
+  recalc();
+}
+
+// ── Kalkulasi ──
+function recalc() {
+  const ppnPct = parseFloat(document.getElementById('ppn_pct').value) || 0;
+  const subtotal = items.reduce((s, i) => s + (i.qty * i.harga), 0);
+  const ppn = subtotal * ppnPct / 100;
+  const grand = subtotal + ppn;
+
+  document.getElementById('t-subtotal').textContent = formatRp(subtotal);
+  document.getElementById('t-ppn').textContent = formatRp(ppn);
+  document.getElementById('t-grand').textContent = formatRp(grand);
+  document.getElementById('ppn-label').textContent = ppnPct;
+}
+
+// ── Validity ──
+function setValidity(btn, val) {
+  document.querySelectorAll('.badge-opt').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('masa_berlaku').value = val;
+}
+
+// ── Validasi ──
+function validate() {
+  const required = [
+    {id:'no_penawaran', label:'No. Penawaran'},
+    {id:'tgl_penawaran', label:'Tanggal'},
+    {id:'nama_perusahaan', label:'Nama Perusahaan'},
+    {id:'alamat', label:'Alamat'},
+    {id:'nama_unit', label:'Nama Unit'},
+    {id:'ttd_nama', label:'Nama Penandatangan'},
+    {id:'ttd_telp', label:'Telepon Penandatangan'},
+  ];
+  let ok = true;
+  required.forEach(f => {
+    const el = document.getElementById(f.id);
+    const field = el.closest('.field');
+    if (!el.value.trim()) {
+      field.classList.add('has-error');
+      ok = false;
+    } else {
+      field.classList.remove('has-error');
+    }
+  });
+  return ok;
+}
+
+// ── Preview ──
+function previewData() {
+  if (!validate()) { showToast('⚠️ Lengkapi data yang wajib diisi', '#c0392b'); return; }
+  const d = collectData();
+  const ppnPct = parseFloat(document.getElementById('ppn_pct').value)||0;
+  const subtotal = items.reduce((s,i)=>s+(i.qty*i.harga),0);
+  const ppn = subtotal * ppnPct / 100;
+  const grand = subtotal + ppn;
+
+  let rows = items.map((item,i) => `
+    <tr>
+      <td>${i+1}</td>
+      <td>${escHtml(item.desc)}</td>
+      <td>${escHtml(item.unit)}</td>
+      <td style="text-align:center">${item.qty}</td>
+      <td style="text-align:right">${formatRp(item.harga)}</td>
+      <td style="text-align:right">${formatRp(item.qty * item.harga)}</td>
+    </tr>`).join('');
+
+  document.getElementById('preview-content').innerHTML = `
+    <p class="preview-section-title">Informasi Penawaran</p>
+    <div class="preview-kv"><div class="k">No. Penawaran</div><div class="v">${escHtml(d.no_penawaran)}</div></div>
+    <div class="preview-kv"><div class="k">Tanggal</div><div class="v">${formatTgl(d.tgl_penawaran)}</div></div>
+
+    <p class="preview-section-title">Tujuan Penawaran</p>
+    <div class="preview-kv"><div class="k">Perusahaan</div><div class="v">${escHtml(d.nama_perusahaan)}</div></div>
+    <div class="preview-kv"><div class="k">Alamat</div><div class="v">${escHtml(d.alamat).replace(/\n/g,'<br>')}</div></div>
+    ${d.nama_pic ? `<div class="preview-kv"><div class="k">PIC / Up.</div><div class="v">${escHtml(d.nama_pic)}${d.jabatan_pic ? ' — '+escHtml(d.jabatan_pic) : ''}</div></div>` : ''}
+    ${d.telp_pic ? `<div class="preview-kv"><div class="k">Telepon PIC</div><div class="v">${escHtml(d.telp_pic)}</div></div>` : ''}
+
+    <p class="preview-section-title">Data Unit</p>
+    <div class="preview-kv"><div class="k">Nama Unit</div><div class="v">${escHtml(d.nama_unit)}</div></div>
+    ${d.no_seri ? `<div class="preview-kv"><div class="k">Nomor Seri</div><div class="v">${escHtml(d.no_seri)}</div></div>` : ''}
+    ${d.tahun_unit ? `<div class="preview-kv"><div class="k">Tahun</div><div class="v">${escHtml(d.tahun_unit)}</div></div>` : ''}
+
+    <p class="preview-section-title">Detail Pekerjaan</p>
+    <table>
+      <thead><tr>
+        <th>#</th><th>Deskripsi</th><th>Nama Unit</th>
+        <th style="text-align:center">Qty</th>
+        <th style="text-align:right">Harga</th>
+        <th style="text-align:right">Total</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+      <tfoot>
+        <tr><td colspan="5" style="text-align:right;font-weight:600;">Subtotal</td><td style="text-align:right;font-weight:600;">${formatRp(subtotal)}</td></tr>
+        <tr><td colspan="5" style="text-align:right;">PPN ${ppnPct}%</td><td style="text-align:right;">${formatRp(ppn)}</td></tr>
+        <tr class="grand-row"><td colspan="5" style="text-align:right;">GRAND TOTAL</td><td style="text-align:right;">${formatRp(grand)}</td></tr>
+      </tfoot>
+    </table>
+
+    <p class="preview-section-title">Syarat & Ketentuan</p>
+    <div class="preview-kv"><div class="k">Masa Berlaku</div><div class="v">${escHtml(d.masa_berlaku)}</div></div>
+    <div class="preview-kv"><div class="k">Waktu Pengerjaan</div><div class="v">${escHtml(d.waktu_kerjaan)}</div></div>
+    <div class="preview-kv"><div class="k">Pembayaran</div><div class="v">${escHtml(d.termin)}</div></div>
+    ${d.catatan_nb ? `<div class="preview-kv"><div class="k">Catatan</div><div class="v">${escHtml(d.catatan_nb)}</div></div>` : ''}
+
+    <p class="preview-section-title">Penandatangan</p>
+    <div class="preview-kv"><div class="k">Nama</div><div class="v">${escHtml(d.ttd_nama)}</div></div>
+    <div class="preview-kv"><div class="k">Jabatan</div><div class="v">${escHtml(d.ttd_jabatan)}</div></div>
+    <div class="preview-kv"><div class="k">Telepon</div><div class="v">${escHtml(d.ttd_telp)}</div></div>
+    ${d.ttd_email ? `<div class="preview-kv"><div class="k">Email</div><div class="v">${escHtml(d.ttd_email)}</div></div>` : ''}
+  `;
+  document.getElementById('preview-overlay').classList.add('open');
+}
+
+function closePreview() {
+  document.getElementById('preview-overlay').classList.remove('open');
+}
+
+// ── Simpan ──
+function saveData() {
+  if (!validate()) { showToast('⚠️ Lengkapi data yang wajib diisi', '#c0392b'); return; }
+  const d = collectData();
+  d.items = items;
+  const json = JSON.stringify(d, null, 2);
+  const blob = new Blob([json], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `penawaran_${d.no_penawaran.replace(/\//g,'-')}_${d.tgl_penawaran}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Data berhasil disimpan sebagai JSON');
+}
+
+function resetForm() {
+  if (!confirm('Reset semua data ke default?')) return;
+  location.reload();
+}
+
+// ── Helper ──
+function collectData() {
+  return {
+    no_penawaran: v('no_penawaran'),
+    tgl_penawaran: v('tgl_penawaran'),
+    nama_perusahaan: v('nama_perusahaan'),
+    alamat: v('alamat'),
+    nama_pic: v('nama_pic'),
+    jabatan_pic: v('jabatan_pic'),
+    telp_pic: v('telp_pic'),
+    email_pic: v('email_pic'),
+    nama_unit: v('nama_unit'),
+    qty_unit: v('qty_unit'),
+    no_seri: v('no_seri'),
+    tahun_unit: v('tahun_unit'),
+    lokasi_unit: v('lokasi_unit'),
+    ket_unit: v('ket_unit'),
+    ppn_pct: v('ppn_pct'),
+    mata_uang: v('mata_uang'),
+    masa_berlaku: v('masa_berlaku'),
+    waktu_kerjaan: v('waktu_kerjaan'),
+    termin: v('termin'),
+    catatan_harga: v('catatan_harga'),
+    catatan_nb: v('catatan_nb'),
+    ttd_nama: v('ttd_nama'),
+    ttd_jabatan: v('ttd_jabatan'),
+    ttd_telp: v('ttd_telp'),
+    ttd_email: v('ttd_email'),
+  };
+}
+
+function v(id) { return document.getElementById(id)?.value.trim() || ''; }
+
+function formatRp(n) {
+  return 'Rp ' + Math.round(n).toLocaleString('id-ID');
+}
+
+function formatTgl(s) {
+  if (!s) return '';
+  const d = new Date(s);
+  return d.toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'});
+}
+
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function showToast(msg, bg='#2c5f2e') {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg.replace(/^[^\s]+\s/,'');
+  t.style.background = bg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3000);
+}
+
+// Close overlay on backdrop click
+document.getElementById('preview-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closePreview();
+});
+</script>
+</body>
+</html>
