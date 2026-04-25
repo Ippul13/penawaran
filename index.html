@@ -67,11 +67,18 @@
     background: white;
     border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .header-logo img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+  }
+  .header-logo-fallback {
     font-family: 'Fraunces', serif;
     font-size: 22px;
     color: var(--accent);
     font-weight: 700;
-    flex-shrink: 0;
   }
   .header-text h1 {
     font-family: 'Fraunces', serif;
@@ -192,7 +199,7 @@
   }
   .field.has-error .error-msg { display: block; }
 
-  /* ── Item rows (tabel penawaran) ── */
+  /* ── Item rows ── */
   .item-table { width: 100%; }
   .item-header {
     display: grid;
@@ -486,6 +493,12 @@
     border-bottom: 1px solid var(--border);
   }
 
+  /* ── Print-only elements hidden on screen ── */
+  .print-kop,
+  .print-noref,
+  .print-footer,
+  .print-watermark { display: none; }
+
   @media (max-width: 640px) {
     .form-grid { grid-template-columns: 1fr; }
     .form-grid.cols-3 { grid-template-columns: 1fr 1fr; }
@@ -500,8 +513,16 @@
     .btn { flex: 1; justify-content: center; }
   }
 
+  /* ════════════════════════════════════════
+     PRINT STYLES
+  ════════════════════════════════════════ */
   @media print {
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+    @page {
+      size: A4 portrait;
+      margin: 16mm 14mm 22mm 14mm;
+    }
 
     html, body {
       margin: 0; padding: 0;
@@ -510,9 +531,10 @@
       overflow: visible !important;
     }
 
-    /* Sembunyikan elemen UI yang tidak perlu */
+    /* Sembunyikan elemen UI */
     .page-header, .action-bar, .btn-remove, .btn-add-item,
-    .ppn-control label:last-child, #preview-overlay { display: none !important; }
+    .ppn-control label:last-child, #preview-overlay,
+    .field .hint, .field .error-msg, .badge-row { display: none !important; }
 
     .container {
       max-width: 100%;
@@ -520,57 +542,157 @@
       margin: 0;
     }
 
-    /* Kop surat cetak */
+    /* ── Watermark tengah — muncul di setiap halaman ── */
+    .print-watermark {
+      display: block !important;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 280px;
+      height: 280px;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .print-watermark img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 0.06;
+    }
+
+    /* ── Footer logo kanan bawah — muncul di setiap halaman ── */
+  /*  .print-footer {
+      display: flex !important;
+      position: fixed;
+      bottom: 8mm;
+      left: 14mm;
+      right: 14mm;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 0.5px solid #ccc;
+      padding-top: 4px;
+      z-index: 10;
+    } */
+    .print-footer-text {
+      font-size: 7pt;
+      color: #999;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .print-footer-logo {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      opacity: 0.7;
+    }
+    .print-footer-logo-fallback {
+      width: 40px;
+      height: 40px;
+      background: #2c5f2e;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-size: 13pt;
+      color: white;
+      font-weight: 700;
+      opacity: 0.7;
+    }
+
+    /* ── Kop surat ── */
     .print-kop {
       display: flex !important;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
-      padding: 0 0 14px;
-      margin-bottom: 14px;
+      padding-bottom: 12px;
+      margin-bottom: 10px;
       border-bottom: 2.5px solid #2c5f2e;
     }
     .print-kop-left h2 {
       font-family: 'Fraunces', serif;
-      font-size: 18pt;
+      font-size: 16pt;
       color: #2c5f2e;
       font-weight: 700;
+      line-height: 1.2;
     }
-    .print-kop-left p { font-size: 8.5pt; color: #555; margin-top: 2px; }
-    .print-kop-right { text-align: right; font-size: 8pt; color: #555; }
-    .print-kop-right strong { font-size: 10pt; color: #1a1a18; }
+    .print-kop-left p {
+      font-size: 8pt;
+      color: #555;
+      margin-top: 3px;
+      line-height: 1.5;
+    }
+    .print-kop-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    .print-kop-right-label {
+      text-align: right;
+      font-size: 8pt;
+      color: #555;
+    }
+    .print-kop-right-label strong {
+      display: block;
+      font-size: 9.5pt;
+      color: #1a1a18;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+    .print-kop-logo {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+    }
+    .print-kop-logo-fallback {
+      width: 70px;
+      height: 70px;
+      background: #2c5f2e;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-size: 24pt;
+      color: white;
+      font-weight: 700;
+    }
 
-    /* Nomor penawaran banner */
+    /* ── No. referensi banner ── */
     .print-noref {
       display: flex !important;
       justify-content: space-between;
-      background: #f4f8f4;
-      border: 1px solid #c5d9c5;
-      border-radius: 6px;
-      padding: 8px 14px;
-      margin-bottom: 14px;
+      background: #f0f6f0;
+      border: 1px solid #b8d4b8;
+      border-radius: 5px;
+      padding: 7px 14px;
+      margin-bottom: 12px;
       font-size: 9pt;
     }
-    .print-noref span { color: #555; }
+    .print-noref span { color: #666; }
     .print-noref strong { color: #2c5f2e; }
 
+    /* ── Cards ── */
     .card {
       box-shadow: none !important;
       border: 1px solid #ddd !important;
       border-radius: 6px !important;
-      padding: 12px 16px !important;
-      margin-bottom: 10px !important;
+      padding: 10px 14px !important;
+      margin-bottom: 8px !important;
       break-inside: avoid;
       page-break-inside: avoid;
+      position: relative;
+      z-index: 1;
     }
-
     .card-title {
       font-size: 9pt !important;
-      padding-bottom: 8px !important;
-      margin-bottom: 12px !important;
+      padding-bottom: 7px !important;
+      margin-bottom: 10px !important;
     }
-    .card-title .icon { display: none; }
+    .card-title .icon { display: none !important; }
 
-    /* Tampilkan data sebagai teks, sembunyikan input */
+    /* Input tampil sebagai teks */
     .field input, .field select, .field textarea {
       border: none !important;
       background: transparent !important;
@@ -580,20 +702,23 @@
       box-shadow: none !important;
       color: #1a1a18 !important;
       height: auto !important;
+      min-height: unset !important;
       resize: none;
     }
     .field label {
-      font-size: 7.5pt !important;
-      color: #888 !important;
+      font-size: 7pt !important;
+      color: #999 !important;
     }
-    .field .hint, .field .error-msg { display: none !important; }
-    .badge-row { display: none !important; }
     .ppn-control input[type="number"] {
-      border: none; background: transparent; font-weight: 600; width: 40px;
+      border: none !important;
+      background: transparent !important;
+      font-weight: 700;
+      width: 36px;
+      padding: 0 !important;
     }
 
     /* Item table */
-    .item-header span { font-size: 7.5pt !important; }
+    .item-header span { font-size: 7pt !important; }
     .item-row input {
       border: none !important;
       background: transparent !important;
@@ -601,30 +726,40 @@
       font-size: 9pt !important;
       box-shadow: none !important;
     }
-    .item-row { margin-bottom: 4px !important; }
+    .item-row { margin-bottom: 3px !important; }
 
     /* Totals */
     .totals { break-inside: avoid; page-break-inside: avoid; }
-    .total-row { padding: 8px 14px !important; }
+    .total-row { padding: 7px 12px !important; }
     .total-row.grand { background: #2c5f2e !important; color: white !important; }
 
-    /* Form grid spacing */
-    .form-grid { gap: 10px !important; }
-
-    /* Auto page break */
-    .card:nth-child(4) { page-break-after: auto; }
-
-    @page {
-      size: A4 portrait;
-      margin: 14mm 14mm 16mm 14mm;
-    }
+    .form-grid { gap: 8px !important; }
   }
 </style>
 </head>
 <body>
 
+<!-- ── Watermark: fixed tengah halaman (muncul di setiap halaman saat print) ── -->
+<div class="print-watermark">
+  <img src="logo1.png" alt=""
+    onerror="this.style.display='none'">
+</div>
+
+<!-- ── Footer: fixed bawah halaman (muncul di setiap halaman saat print) ── -->
+<div class="print-footer">
+  <div class="print-footer-text">
+    CV. Permata Teknik Solution &nbsp;·&nbsp; General Supplier and Engineering Service<br>
+    Permata Nusa Indah Cluster Emerald No.01, Cibitung, Kab. Bekasi &nbsp;·&nbsp; 085 880 912 714
+  </div>
+  <img src="logo1.png" class="print-footer-logo" alt="Logo PTS"
+    onerror="this.outerHTML='<div class=\'print-footer-logo-fallback\'>PTS</div>'">
+</div>
+
 <div class="page-header">
-  <div class="header-logo"></div>
+  <div class="header-logo">
+    <img src="logo1.png" alt="Logo PTS"
+      onerror="this.outerHTML='<span class=\'header-logo-fallback\'>PTS</span>'">
+  </div>
   <div class="header-text">
     <h1>CV. Permata Teknik Solution</h1>
     <p>Form Input Data Penawaran Jasa / Barang</p>
@@ -634,27 +769,32 @@
 <div class="container">
 
   <!-- KOP SURAT — hanya tampil saat cetak -->
-  <div class="print-kop" style="display:none;">
+  <div class="print-kop">
     <div class="print-kop-left">
       <h2>CV. Permata Teknik Solution</h2>
       <p>General Supplier and Engineering Service</p>
-      <p>Permata Nusa Indah Cluster Emerald No.01, RT005/RW013, Cibitung, Muktiwari, Kab. Bekasi</p>
-      <p>Email: Permatatekniksolution@gmail.com</p>
+      <p>Permata Nusa Indah Cluster Emerald No.01, RT005/RW013</p>
+      <p>Cibitung, Muktiwari, Kab. Bekasi</p>
+      <p>Email: Permatatekniksolution@gmail.com &nbsp;·&nbsp; 085 880 912 714</p>
     </div>
     <div class="print-kop-right">
-      <div style="font-size:28pt;font-family:'Fraunces',serif;color:#2c5f2e;font-weight:700;line-height:1;">PTS</div>
-      <div style="margin-top:4px;"><strong>SURAT PENAWARAN BARANG / JASA</strong></div>
+      <div class="print-kop-right-label">
+        <strong>SURAT PENAWARAN BARANG / JASA</strong>
+        CV. Permata Teknik Solution
+      </div>
+      <img src="logo1.png" class="print-kop-logo" alt="Logo PTS"
+        onerror="this.outerHTML='<div class=\'print-kop-logo-fallback\'>PTS</div>'">
     </div>
   </div>
 
   <!-- NO. REFERENSI — hanya tampil saat cetak -->
-  <div class="print-noref" style="display:none;">
+  <div class="print-noref">
     <div><span>No. Penawaran: </span><strong id="print-no">—</strong></div>
     <div><span>Tanggal: </span><strong id="print-tgl">—</strong></div>
   </div>
 
   <!-- ═══ 1. NOMOR PENAWARAN ═══ -->
-  <div class="card">
+  <div class="card" id="card-info">
     <div class="card-title">
       <div class="icon">📋</div>
       Informasi Penawaran Barang / Jasa
@@ -673,13 +813,18 @@
     </div>
   </div>
 
-  <!-- ═══ 2. DATA PELANGGAN ═══ -->
+  <!-- ═══ 2. INTRO ═══ -->
   <div class="card">
     <div class="field span-2">
-        <p>Dengan Hormat,<br>
-Sesuai dengan permintaan Bapak / Ibu, dengan ini kami mengajukan penawaran Barang / Jasa, dengan detail dan spesifikasi sebagai berikut:</p>              
+      <p style="font-size:14px;line-height:1.7;color:#444;">
+        Dengan Hormat,<br>
+        Sesuai dengan permintaan Bapak / Ibu, dengan ini kami mengajukan penawaran Barang / Jasa,
+        dengan detail dan spesifikasi sebagai berikut:
+      </p>
     </div>
-  </div> 
+  </div>
+
+  <!-- ═══ 3. DATA PELANGGAN ═══ -->
   <div class="card">
     <div class="card-title">
       <div class="icon">🏢</div>
@@ -687,35 +832,34 @@ Sesuai dengan permintaan Bapak / Ibu, dengan ini kami mengajukan penawaran Baran
     </div>
     <div class="form-grid">
       <div class="field span-2">
-        <label>Nama Perusahaan <span class="">*</span></label>
-        <input type="text" id="nama_perusahaan" placeholder="cth: PT. Nama Perusahaan" value="NAMA PERUSAHAAN" >
+        <label>Nama Perusahaan <span class="req">*</span></label>
+        <input type="text" id="nama_perusahaan" placeholder="cth: PT. Nama Perusahaan" value="NAMA PERUSAHAAN">
       </div>
       <div class="field span-2">
-        <label>Alamat Lengkap <span class="">*</span></label>
-        <input type="text" id="alamat" placeholder="Gedung, lantai, jalan, kelurahan, kecamatan, kota" value="Alamat Lengkap" >
-        
+        <label>Alamat Lengkap <span class="req">*</span></label>
+        <input type="text" id="alamat" placeholder="Gedung, lantai, jalan, kelurahan, kecamatan, kota" value="Alamat Lengkap">
       </div>
       <div class="field">
         <label>Nama PIC / Customer</label>
         <input type="text" id="nama_pic" placeholder="cth: Nama Customer">
       </div>
       <div class="field">
-        <label>Jabatan </label>
+        <label>Jabatan</label>
         <input type="text" id="jabatan_pic" placeholder="cth: Procurement Manager">
       </div>
       <div class="field">
-        <label>No. Telepon </label>
+        <label>No. Telepon</label>
         <input type="tel" id="telp_pic" placeholder="cth: 081234567890">
-        <span class="hint">Format: phone, nomor lokal atau internasional</span>
+        <span class="hint">Format: nomor lokal atau internasional</span>
       </div>
       <div class="field">
-        <label>Email </label>
+        <label>Email</label>
         <input type="email" id="email_pic" placeholder="cth: procurement@perusahaan.com">
       </div>
     </div>
   </div>
 
-  <!-- ═══ 3. DATA UNIT ═══ -->
+  <!-- ═══ 4. DATA UNIT ═══ -->
   <div class="card">
     <div class="card-title">
       <div class="icon">⚙️</div>
@@ -723,9 +867,8 @@ Sesuai dengan permintaan Bapak / Ibu, dengan ini kami mengajukan penawaran Baran
     </div>
     <div class="form-grid cols-3">
       <div class="field span-2">
-        <label>Nama Unit / Mesin <span class="">*</span></label>
-        <input type="text" id="nama_unit" placeholder="cth: barang / jasa" value="Nama unit / mesin" >
-        
+        <label>Nama Unit / Mesin <span class="req">*</span></label>
+        <input type="text" id="nama_unit" placeholder="cth: barang / jasa" value="Nama unit / mesin">
       </div>
       <div class="field">
         <label>Jumlah Unit</label>
@@ -744,13 +887,13 @@ Sesuai dengan permintaan Bapak / Ibu, dengan ini kami mengajukan penawaran Baran
         <input type="text" id="lokasi_unit" placeholder="cth: Plant Area A">
       </div>
       <div class="field span-3">
-        <label>Keterangan Tambahan </label>
+        <label>Keterangan Tambahan</label>
         <textarea id="ket_unit" rows="2" placeholder="cth: kondisi, catatan khusus, dsb."></textarea>
       </div>
     </div>
   </div>
 
-  <!-- ═══ 4. DETAIL PEKERJAAN ═══ -->
+  <!-- ═══ 5. DETAIL PEKERJAAN ═══ -->
   <div class="card">
     <div class="card-title">
       <div class="icon">🔧</div>
@@ -773,7 +916,6 @@ Sesuai dengan permintaan Bapak / Ibu, dengan ini kami mengajukan penawaran Baran
       <span>＋</span> Tambah Item
     </button>
 
-    <!-- Totals -->
     <div class="field" style="margin-top:16px; flex-direction:row; align-items:center; gap:10px;">
       <label style="text-transform:none; letter-spacing:0; font-size:13px; white-space:nowrap; font-weight:500;">PPN (%)</label>
       <div class="ppn-control">
@@ -798,7 +940,7 @@ Sesuai dengan permintaan Bapak / Ibu, dengan ini kami mengajukan penawaran Baran
     </div>
   </div>
 
-  <!-- ═══ 5. SYARAT & KETENTUAN ═══ -->
+  <!-- ═══ 6. SYARAT & KETENTUAN ═══ -->
   <div class="card">
     <div class="card-title">
       <div class="icon">📝</div>
@@ -841,7 +983,7 @@ Sesuai dengan permintaan Bapak / Ibu, dengan ini kami mengajukan penawaran Baran
     </div>
   </div>
 
-  <!-- ═══ 6. PENANDATANGAN ═══ -->
+  <!-- ═══ 7. PENANDATANGAN ═══ -->
   <div class="card">
     <div class="card-title">
       <div class="icon">✍️</div>
@@ -896,16 +1038,11 @@ Sesuai dengan permintaan Bapak / Ibu, dengan ini kami mengajukan penawaran Baran
 <div id="toast">✅ <span id="toast-msg"></span></div>
 
 <script>
-// ── Inisialisasi ──
 let items = [];
-let validitySelected = '14 hari';
 
 document.getElementById('tgl_penawaran').value = new Date().toISOString().split('T')[0];
+addItem('Jasa item / barang', 'Nama Unit', 1, 0);
 
-// Default item
-addItem('Jasa item / barang', 'Nama Unit', 1, 000000);
-
-// ── Tambah item ──
 function addItem(desc='', unit='', qty=1, harga=0) {
   const id = Date.now();
   items.push({ id, desc, unit, qty, harga });
@@ -953,52 +1090,38 @@ function removeItem(id) {
   recalc();
 }
 
-// ── Kalkulasi ──
 function recalc() {
   const ppnPct = parseFloat(document.getElementById('ppn_pct').value) || 0;
   const subtotal = items.reduce((s, i) => s + (i.qty * i.harga), 0);
   const ppn = subtotal * ppnPct / 100;
   const grand = subtotal + ppn;
-
   document.getElementById('t-subtotal').textContent = formatRp(subtotal);
   document.getElementById('t-ppn').textContent = formatRp(ppn);
   document.getElementById('t-grand').textContent = formatRp(grand);
   document.getElementById('ppn-label').textContent = ppnPct;
 }
 
-// ── Validity ──
 function setValidity(btn, val) {
   document.querySelectorAll('.badge-opt').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('masa_berlaku').value = val;
 }
 
-// ── Validasi ──
 function validate() {
   const required = [
-    {id:'no_penawaran', label:'No. Penawaran'},
-    {id:'tgl_penawaran', label:'Tanggal'},
-    {id:'nama_perusahaan', label:'Nama Perusahaan'},
-    {id:'alamat', label:'Alamat'},
-    {id:'nama_unit', label:'Nama Unit'},
-    {id:'ttd_nama', label:'Nama Penandatangan'},
-    {id:'ttd_telp', label:'Telepon Penandatangan'},
+    {id:'no_penawaran'}, {id:'tgl_penawaran'}, {id:'nama_perusahaan'},
+    {id:'alamat'}, {id:'nama_unit'}, {id:'ttd_nama'}, {id:'ttd_telp'},
   ];
   let ok = true;
   required.forEach(f => {
     const el = document.getElementById(f.id);
     const field = el.closest('.field');
-    if (!el.value.trim()) {
-      field.classList.add('has-error');
-      ok = false;
-    } else {
-      field.classList.remove('has-error');
-    }
+    if (!el.value.trim()) { field.classList.add('has-error'); ok = false; }
+    else field.classList.remove('has-error');
   });
   return ok;
 }
 
-// ── Preview ──
 function previewData() {
   if (!validate()) { showToast('⚠️ Lengkapi data yang wajib diisi', '#c0392b'); return; }
   const d = collectData();
@@ -1007,40 +1130,30 @@ function previewData() {
   const ppn = subtotal * ppnPct / 100;
   const grand = subtotal + ppn;
 
-  let rows = items.map((item,i) => `
+  const rows = items.map((item,i) => `
     <tr>
-      <td>${i+1}</td>
-      <td>${escHtml(item.desc)}</td>
-      <td>${escHtml(item.unit)}</td>
+      <td>${i+1}</td><td>${escHtml(item.desc)}</td><td>${escHtml(item.unit)}</td>
       <td style="text-align:center">${item.qty}</td>
       <td style="text-align:right">${formatRp(item.harga)}</td>
-      <td style="text-align:right">${formatRp(item.qty * item.harga)}</td>
+      <td style="text-align:right">${formatRp(item.qty*item.harga)}</td>
     </tr>`).join('');
 
   document.getElementById('preview-content').innerHTML = `
     <p class="preview-section-title">Informasi Penawaran</p>
     <div class="preview-kv"><div class="k">No. Penawaran</div><div class="v">${escHtml(d.no_penawaran)}</div></div>
     <div class="preview-kv"><div class="k">Tanggal</div><div class="v">${formatTgl(d.tgl_penawaran)}</div></div>
-
     <p class="preview-section-title">Tujuan Penawaran</p>
     <div class="preview-kv"><div class="k">Perusahaan</div><div class="v">${escHtml(d.nama_perusahaan)}</div></div>
-    <div class="preview-kv"><div class="k">Alamat</div><div class="v">${escHtml(d.alamat).replace(/\n/g,'<br>')}</div></div>
-    ${d.nama_pic ? `<div class="preview-kv"><div class="k">PIC / Up.</div><div class="v">${escHtml(d.nama_pic)}${d.jabatan_pic ? ' — '+escHtml(d.jabatan_pic) : ''}</div></div>` : ''}
-    ${d.telp_pic ? `<div class="preview-kv"><div class="k">Telepon PIC</div><div class="v">${escHtml(d.telp_pic)}</div></div>` : ''}
-
+    <div class="preview-kv"><div class="k">Alamat</div><div class="v">${escHtml(d.alamat)}</div></div>
+    ${d.nama_pic?`<div class="preview-kv"><div class="k">PIC</div><div class="v">${escHtml(d.nama_pic)}${d.jabatan_pic?' — '+escHtml(d.jabatan_pic):''}</div></div>`:''}
+    ${d.telp_pic?`<div class="preview-kv"><div class="k">Telepon PIC</div><div class="v">${escHtml(d.telp_pic)}</div></div>`:''}
     <p class="preview-section-title">Data Unit</p>
     <div class="preview-kv"><div class="k">Nama Unit</div><div class="v">${escHtml(d.nama_unit)}</div></div>
-    ${d.no_seri ? `<div class="preview-kv"><div class="k">Nomor Seri</div><div class="v">${escHtml(d.no_seri)}</div></div>` : ''}
-    ${d.tahun_unit ? `<div class="preview-kv"><div class="k">Tahun</div><div class="v">${escHtml(d.tahun_unit)}</div></div>` : ''}
-
+    ${d.no_seri?`<div class="preview-kv"><div class="k">Nomor Seri</div><div class="v">${escHtml(d.no_seri)}</div></div>`:''}
+    ${d.tahun_unit?`<div class="preview-kv"><div class="k">Tahun</div><div class="v">${escHtml(d.tahun_unit)}</div></div>`:''}
     <p class="preview-section-title">Detail Pekerjaan</p>
     <table>
-      <thead><tr>
-        <th>#</th><th>Deskripsi</th><th>Nama Unit</th>
-        <th style="text-align:center">Qty</th>
-        <th style="text-align:right">Harga</th>
-        <th style="text-align:right">Total</th>
-      </tr></thead>
+      <thead><tr><th>#</th><th>Deskripsi</th><th>Nama Unit</th><th style="text-align:center">Qty</th><th style="text-align:right">Harga</th><th style="text-align:right">Total</th></tr></thead>
       <tbody>${rows}</tbody>
       <tfoot>
         <tr><td colspan="5" style="text-align:right;font-weight:600;">Subtotal</td><td style="text-align:right;font-weight:600;">${formatRp(subtotal)}</td></tr>
@@ -1048,18 +1161,16 @@ function previewData() {
         <tr class="grand-row"><td colspan="5" style="text-align:right;">GRAND TOTAL</td><td style="text-align:right;">${formatRp(grand)}</td></tr>
       </tfoot>
     </table>
-
     <p class="preview-section-title">Syarat & Ketentuan</p>
     <div class="preview-kv"><div class="k">Masa Berlaku</div><div class="v">${escHtml(d.masa_berlaku)}</div></div>
     <div class="preview-kv"><div class="k">Waktu Pengerjaan</div><div class="v">${escHtml(d.waktu_kerjaan)}</div></div>
     <div class="preview-kv"><div class="k">Pembayaran</div><div class="v">${escHtml(d.termin)}</div></div>
-    ${d.catatan_nb ? `<div class="preview-kv"><div class="k">Catatan</div><div class="v">${escHtml(d.catatan_nb)}</div></div>` : ''}
-
+    ${d.catatan_nb?`<div class="preview-kv"><div class="k">Catatan</div><div class="v">${escHtml(d.catatan_nb)}</div></div>`:''}
     <p class="preview-section-title">Penandatangan</p>
     <div class="preview-kv"><div class="k">Nama</div><div class="v">${escHtml(d.ttd_nama)}</div></div>
     <div class="preview-kv"><div class="k">Jabatan</div><div class="v">${escHtml(d.ttd_jabatan)}</div></div>
     <div class="preview-kv"><div class="k">Telepon</div><div class="v">${escHtml(d.ttd_telp)}</div></div>
-    ${d.ttd_email ? `<div class="preview-kv"><div class="k">Email</div><div class="v">${escHtml(d.ttd_email)}</div></div>` : ''}
+    ${d.ttd_email?`<div class="preview-kv"><div class="k">Email</div><div class="v">${escHtml(d.ttd_email)}</div></div>`:''}
   `;
   document.getElementById('preview-overlay').classList.add('open');
 }
@@ -1068,20 +1179,18 @@ function closePreview() {
   document.getElementById('preview-overlay').classList.remove('open');
 }
 
-// ── Simpan ──
 function saveData() {
   if (!validate()) { showToast('⚠️ Lengkapi data yang wajib diisi', '#c0392b'); return; }
   const d = collectData();
   d.items = items;
-  const json = JSON.stringify(d, null, 2);
-  const blob = new Blob([json], {type:'application/json'});
+  const blob = new Blob([JSON.stringify(d,null,2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
   a.download = `penawaran_${d.no_penawaran.replace(/\//g,'-')}_${d.tgl_penawaran}.json`;
   a.click();
   URL.revokeObjectURL(url);
-  showToast('Data berhasil disimpan sebagai JSON');
+  showToast('Data berhasil disimpan');
 }
 
 function resetForm() {
@@ -1089,53 +1198,32 @@ function resetForm() {
   location.reload();
 }
 
-// ── Helper ──
 function collectData() {
   return {
-    no_penawaran: v('no_penawaran'),
-    tgl_penawaran: v('tgl_penawaran'),
-    nama_perusahaan: v('nama_perusahaan'),
-    alamat: v('alamat'),
-    nama_pic: v('nama_pic'),
-    jabatan_pic: v('jabatan_pic'),
-    telp_pic: v('telp_pic'),
-    email_pic: v('email_pic'),
-    nama_unit: v('nama_unit'),
-    qty_unit: v('qty_unit'),
-    no_seri: v('no_seri'),
-    tahun_unit: v('tahun_unit'),
-    lokasi_unit: v('lokasi_unit'),
-    ket_unit: v('ket_unit'),
-    ppn_pct: v('ppn_pct'),
-    mata_uang: v('mata_uang'),
-    masa_berlaku: v('masa_berlaku'),
-    waktu_kerjaan: v('waktu_kerjaan'),
-    termin: v('termin'),
-    catatan_harga: v('catatan_harga'),
-    catatan_nb: v('catatan_nb'),
-    ttd_nama: v('ttd_nama'),
-    ttd_jabatan: v('ttd_jabatan'),
-    ttd_telp: v('ttd_telp'),
-    ttd_email: v('ttd_email'),
+    no_penawaran:v('no_penawaran'), tgl_penawaran:v('tgl_penawaran'),
+    nama_perusahaan:v('nama_perusahaan'), alamat:v('alamat'),
+    nama_pic:v('nama_pic'), jabatan_pic:v('jabatan_pic'),
+    telp_pic:v('telp_pic'), email_pic:v('email_pic'),
+    nama_unit:v('nama_unit'), qty_unit:v('qty_unit'),
+    no_seri:v('no_seri'), tahun_unit:v('tahun_unit'),
+    lokasi_unit:v('lokasi_unit'), ket_unit:v('ket_unit'),
+    ppn_pct:v('ppn_pct'), mata_uang:v('mata_uang'),
+    masa_berlaku:v('masa_berlaku'), waktu_kerjaan:v('waktu_kerjaan'),
+    termin:v('termin'), catatan_harga:v('catatan_harga'), catatan_nb:v('catatan_nb'),
+    ttd_nama:v('ttd_nama'), ttd_jabatan:v('ttd_jabatan'),
+    ttd_telp:v('ttd_telp'), ttd_email:v('ttd_email'),
   };
 }
 
-function v(id) { return document.getElementById(id)?.value.trim() || ''; }
-
-function formatRp(n) {
-  return 'Rp ' + Math.round(n).toLocaleString('id-ID');
-}
-
+function v(id) { return document.getElementById(id)?.value.trim()||''; }
+function formatRp(n) { return 'Rp '+Math.round(n).toLocaleString('id-ID'); }
 function formatTgl(s) {
   if (!s) return '';
-  const d = new Date(s);
-  return d.toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'});
+  return new Date(s).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
 }
-
 function escHtml(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-
 function showToast(msg, bg='#2c5f2e') {
   const t = document.getElementById('toast');
   document.getElementById('toast-msg').textContent = msg.replace(/^[^\s]+\s/,'');
@@ -1144,27 +1232,21 @@ function showToast(msg, bg='#2c5f2e') {
   setTimeout(()=>t.classList.remove('show'), 3000);
 }
 
-// Close overlay on backdrop click
 document.getElementById('preview-overlay').addEventListener('click', function(e) {
   if (e.target === this) closePreview();
 });
 
-// Sebelum print: isi elemen kop surat dengan data terkini
+// Sebelum print: isi no. referensi, sembunyikan card info
 window.addEventListener('beforeprint', function() {
-  const no = document.getElementById('no_penawaran')?.value || '—';
+  document.getElementById('print-no').textContent = document.getElementById('no_penawaran')?.value || '—';
   const tgl = document.getElementById('tgl_penawaran')?.value || '';
-  document.getElementById('print-no').textContent = no;
-  document.getElementById('print-tgl').textContent = tgl
-    ? new Date(tgl).toLocaleDateString('id-ID', {day:'numeric',month:'long',year:'numeric'})
-    : '—';
-
-  // Sembunyikan card "Informasi Penawaran" saat cetak karena sudah ada di kop
-  const infoCard = document.querySelector('.card:nth-child(3)');
+  document.getElementById('print-tgl').textContent = tgl ? formatTgl(tgl) : '—';
+  const infoCard = document.getElementById('card-info');
   if (infoCard) infoCard.style.display = 'none';
 });
 
 window.addEventListener('afterprint', function() {
-  const infoCard = document.querySelector('.card:nth-child(3)');
+  const infoCard = document.getElementById('card-info');
   if (infoCard) infoCard.style.display = '';
 });
 </script>
