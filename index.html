@@ -657,7 +657,7 @@
   <div class="card">
     <div class="card-title">
       <div class="icon">📋</div>
-      Informasi Penawaran
+      Informasi Penawaran Barang / Jasa
     </div>
     <div class="form-grid">
       <div class="field">
@@ -681,6 +681,8 @@
     </div>
     <div class="form-grid">
       <div class="field span-2">
+        <p>Dengan Hormat,<br>
+Sesuai dengan permintaan Bapak / Ibu, dengan ini kami mengajukan penawaran Jasa,</p>
         <label>Nama Perusahaan <span class="">*</span></label>
         <input type="text" id="nama_perusahaan" placeholder="cth: PT. Nama Perusahaan" value="NAMA PERUSAHAAN" >
       </div>
@@ -821,7 +823,7 @@
         <input type="text" id="waktu_kerjaan" placeholder="cth: 3 Hari" value="3 Hari">
       </div>
       <div class="field span-2">
-        <label>Termin / Syarat Pembayaran</label>
+        <label>Syarat Pembayaran</label>
         <input type="text" id="termin" placeholder="cth: Termin atau Tempo sesuai kesepakatan" value="Termin atau Tempo sesuai dengan kesepakatan">
       </div>
       <div class="field">
@@ -839,7 +841,7 @@
   <div class="card">
     <div class="card-title">
       <div class="icon">✍️</div>
-      Data Penandatangan (Dari CV. PTS)
+      Data Penandatangan (Dari CV. Permata Teknik Solution)
     </div>
     <div class="form-grid">
       <div class="field">
@@ -897,7 +899,7 @@ let validitySelected = '14 hari';
 document.getElementById('tgl_penawaran').value = new Date().toISOString().split('T')[0];
 
 // Default item
-addItem('Jasa item / barang', 'Nama Unit', 1, 1700000);
+addItem('Jasa item / barang', 'Nama Unit', 1, 000000);
 
 // ── Tambah item ──
 function addItem(desc='', unit='', qty=1, harga=0) {
